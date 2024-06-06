@@ -1,0 +1,45 @@
+#apiVersion: networking.k8s.io/v1
+#kind: Ingress
+#metadata:
+#  name: enterprise-web-app
+#spec:
+#  rules:
+#    - host: hello.minikube.com
+#      http:
+#        paths:
+#        - path: /
+#          pathType: Exact
+#          backend:
+#            service:
+#              name: enterprise-web-app
+#              port:
+#                number: 5000
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minikube-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: hello.minikube
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: enterprise-web-app
+              port:
+#                number: 5000
+                number: 8080
+        - path: /employees
+          pathType: Prefix
+          backend:
+            service:
+              name: enterprise-web-app
+              port:
+#                number: 5000
+                number: 8080

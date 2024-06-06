@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  labels:
+    name: database
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      service: postgres
+  template:
+    metadata:
+      labels:
+        service: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:13-alpine
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+          volumeMounts:
+            - name: postgres-volume-mount
+              mountPath: /var/lib/postgresql/data
+            - name: create-table-script
+              mountPath: /docker-entrypoint-initdb.d/create_table.sql
+              subPath: create_table.sql
+            - name: insert-data-script
+              mountPath: /docker-entrypoint-initdb.d/insert_data.sql
+              subPath: insert_data.sql
+            - name: ssl-certs
+              mountPath: /certs
+              readOnly: true
+      volumes:
+        - name: postgres-volume-mount
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+        - name: create-table-script
+          configMap:
+            name: create-table-script
+        - name: insert-data-script
+          configMap:
+            name: insert-data-script
+        - name: ssl-certs
+          secret:
+            secretName: ssl-certs-secret
+      restartPolicy: Always
