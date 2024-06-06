@@ -28,10 +28,31 @@ Explanation of the project structure and the purpose of each file and directory.
 4. Navigate to the root directory, open the `deploy_kubernetes.sh` file to setup the kubernetes
 
 ## Usage
-- The web server will be accessible at `http://127.0.0.1:8080/employees`.
+- The web server will be accessible at http://127.0.0.1:8080/employees or http://localhost:8080/employees on dockers.
 
 [//]: # (- The web server will be accessible at `https://localhost:5000`.)
 - The endpoint `/employees` will fetch the list of employees from the database.
+
+### Deployment
+Docker Deployment
+
+For local development or testing, you can deploy the application using Docker Compose:
+
+
+    cd deployment/
+    docker-compose up -d
+´´´
+
+### Kubernetes Deployment
+
+For production deployment or Kubernetes testing environments, you can deploy the application to a Kubernetes cluster:
+
+
+    ./deploy_kubernetes.sh
+
+´´´
+This script will create all necessary Kubernetes resources defined in the deployment/k8s/ directory.
+
 
 ## Technologies Used
 - Python
@@ -43,4 +64,4 @@ Explanation of the project structure and the purpose of each file and directory.
 - Terraform 
 
 ## Note
-If the script doesn't run it all directly, you can everything up by running the commands individually, especially for the kubernetes parts.
+If the bash script doesn't run directly, you can start everything up by running the commands individually, especially for the kubernetes parts.
