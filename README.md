@@ -18,6 +18,9 @@ Explanation of the project structure and the purpose of each file and directory.
             # Push image
             docker push opeyemimomodu/enterprise-web-app
 
+            # Pull image
+            docker pull opeyemimomodu/enterprise-web-app
+
 
 
 2. Navigate to the `deployment` directory.
