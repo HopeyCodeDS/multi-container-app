@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-from flask_talisman import Talisman
 import psycopg2
 import os
 from decimal import Decimal
@@ -66,7 +65,7 @@ def get_employees():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=8080, debug=True)
     # Path to SSL/TLS certificate and private key
     # ssl_cert = os.path.join(os.path.dirname(__file__), '.\src\certs\server.crt')
     # ssl_key = os.path.join(os.path.dirname(__file__), '.\src\certs\server.key')

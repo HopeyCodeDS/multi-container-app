@@ -1,5 +1,6 @@
 #!/bin/bash
 
+minikube start
 
 echo "Creating the volume..."
 kubectl apply -f ./deployment/k8s/persistent-volume.yml

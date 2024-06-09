@@ -30,7 +30,6 @@ COPY certs/server.key /app/certs/server.key
 
 # Make port 5000 available to the world outside this container
 EXPOSE 8080
-#EXPOSE 5000
 
 # Define environment variable
 ENV NAME World
