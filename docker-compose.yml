@@ -1,0 +1,23 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ./src
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      POSTGRES_DB: Enterprise
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Student_1234
+      POSTGRES_HOST: postgres
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: Enterprise
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Student_1234
+    ports:
+      - "5432:5432"

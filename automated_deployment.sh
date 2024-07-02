@@ -9,14 +9,14 @@ print_status() {
   echo "=========================================="
 }
 
-print_status "Stopping and removing existing containers"
-docker-compose -f deployment/docker-compose.yml down
-
-print_status "Building and starting containers"
-docker-compose -f deployment/docker-compose.yml up --build -d
-
-print_status "Printing container status"
-docker-compose -f deployment/docker-compose.yml ps
+#print_status "Stopping and removing existing containers"
+#docker-compose -f deployment/docker-compose.yml down
+#
+#print_status "Building and starting containers"
+#docker-compose -f deployment/docker-compose.yml up --build
+#
+#print_status "Printing container status"
+#docker-compose -f deployment/docker-compose.yml ps
 
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
 minikube version

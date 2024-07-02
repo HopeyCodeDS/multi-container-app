@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: momodu-rilwan-opeyemi-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: momodu-rilwan-opeyemi-app
+  template:
+    metadata:
+      labels:
+        app: momodu-rilwan-opeyemi-app
+    spec:
+      containers:
+        - name: momodu-rilwan-opeyemi-app
+          image: opeyemimomodu/momodu-rilwan-opeyemi-app:latest
+          ports:
+            - containerPort: 5000
+          env:
+            - name: POSTGRES_HOST
+              value: "momodu-rilwan-opeyemi-postgres"  # Service name of PostgreSQL
+            - name: POSTGRES_DB
+              value: "Enterprise"
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "Student_1234"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: momodu-rilwan-opeyemi-app
+spec:
+  selector:
+    app: momodu-rilwan-opeyemi-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: LoadBalancer
+
+
+
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: momodu-rilwan-opeyemi-app
+#spec:
+#  replicas: 2
+#  selector:
+#    matchLabels:
+#      app: momodu-rilwan-opeyemi-app
+#  template:
+#    metadata:
+#      labels:
+#        app: momodu-rilwan-opeyemi-app
+#    spec:
+#      containers:
+#        - name: momodu-rilwan-opeyemi-app
+#          image: opeyemimomodu/momodu-rilwan-opeyemi-app:latest
+#          ports:
+#            - containerPort: 5000
+#          env:
+#            - name: POSTGRES_HOST
+#              value: "momodu-rilwan-opeyemi-postgres"
+#            - name: POSTGRES_DB
+#              value: "Enterprise"
+#            - name: POSTGRES_USER
+#              value: "postgres"
+#            - name: POSTGRES_PASSWORD
+#              value: "Student_1234"
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: momodu-rilwan-opeyemi-app
+#spec:
+#  selector:
+#    app: momodu-rilwan-opeyemi-app
+#  ports:
+#    - protocol: TCP
+#      port: 80
+#      targetPort: 5000
+#  type: LoadBalancer
