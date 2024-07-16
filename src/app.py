@@ -14,7 +14,8 @@ DB_NAME = os.getenv('POSTGRES_DB', 'Enterprise')
 DB_USER = os.getenv('POSTGRES_USER', 'postgres')
 DB_PASS = os.getenv('POSTGRES_PASSWORD', 'Student_1234')
 DB_PORT = os.getenv('POSTGRES_PORT', '5432')
-DB_HOST = 'postgres'  # Ensure this matches the service name in docker-compose.yml
+DB_HOST = '127.0.0.1'
+# DB_HOST = 'postgres'
 
 def get_db_connection(retries=5):
     attempts = 0
@@ -118,6 +119,18 @@ def get_employees():
     conn.close()
     employees = convert_decimal(employees)  # Convert Decimal types to float
     return jsonify(employees)
+
+@app.route('/employees/<int:id>', methods=['GET'])
+def get_employee(id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM employees WHERE employee_id = %s;', (str(id),))
+    employee = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    employee = convert_decimal(employee)  # Convert Decimal types to float
+    return jsonify(employee)
+
 
 if __name__ == '__main__':
     # Attempt to create tables if they don't exist
